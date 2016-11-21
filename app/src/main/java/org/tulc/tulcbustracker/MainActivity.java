@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         webView.addJavascriptInterface(new WebAppInterface(this), "Android");
         webView.clearCache(true);
-        webView.loadUrl("http://vm-fyp.codeanyapp.com/expressapp/public/index.html");
+        webView.loadUrl("https://tubts-mobile.herokuapp.com/");
 
         OneSignal.startInit(this)
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
