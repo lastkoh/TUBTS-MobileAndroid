@@ -1,6 +1,8 @@
 package org.tulc.tulcbustracker;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -10,11 +12,14 @@ import android.webkit.WebView;
 import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
 
+import static org.tulc.tulcbustracker.R.id.webview;
+
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
     public static WebView webView;
     private static boolean activityStarted;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,13 +33,14 @@ public class MainActivity extends AppCompatActivity {
         activityStarted = true;
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        webView = (WebView) findViewById(R.id.webview);
+        webView = (WebView) findViewById(webview);
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setAppCacheEnabled(true);
         webSettings.setAllowFileAccess(true);
+        webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 
         webView.addJavascriptInterface(new WebAppInterface(this), "Android");
         webView.clearCache(true);
